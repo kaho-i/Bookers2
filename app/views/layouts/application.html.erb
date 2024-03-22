@@ -3,6 +3,7 @@
   <head>
     <title>Bookers2</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <script src="https://kit.fontawesome.com/7338d13553.js" crossorigin="anonymous"></script>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -11,6 +12,53 @@
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+      <div>Bookers</div>
+      <% if user_signed_in? %>
+        <li>
+          <%= link_to "Home", user_path(current_user.id) %>
+        </li>
+        <li>
+          <%= link_to "Users", '/users' %>
+        </li>
+        <li>
+          <%= link_to "Books", '/books' %>
+        </li>
+        <li>
+          <%= link_to "Log out", destroy_user_session_path, method: :delete %>
+        </li>
+      <% else %>
+        <li>
+          <%= link_to "Home", root_path %>
+        </li>
+        <li>
+          <%= link_to "About", '/homes/about' %>
+        </li>
+        <li>
+          <%= link_to "Sign up", new_user_registration_path %>
+        </li>
+        <li>
+          <%= link_to "Log in", new_user_session_path %>
+        </li>
+      <% end %>
+    </header>
+    <main>
+      <% if flash[:notice] %>
+        <div class="notice">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+      
+      <% if user_signed_in? && action_name != "edit" %>
+        <div>
+          <%= render 'shared/dashboard' %>
+        </div>
+      <% else %>
+      <% end %>
+      <%= yield %>
+    </main>
+    <footer>
+      <p>CopyRight Infratop.inc</p>
+    </footer>
   </body>
 </html>
