@@ -22,11 +22,11 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     @user = @book.user
   end
-  
+
   def edit
     @book = Book.find(params[:id])
   end
-  
+
   def update
     @book = Book.find(params[:id])
     @user = @book.user
@@ -35,20 +35,20 @@ class BooksController < ApplicationController
       redirect_to user_path(@user.id)
     else
       flash[:notice] = '%s prohibited this %s from being saved:' % [ @book.errors.count == 1 ? "1 error" : "#{@book.errors.count} errors", 'obj' ]
-      render edit
+      render :edit
     end
   end
-  
+
   def destroy
     book = Book.find(params[:id])
     book.destroy
     redirect_to '/books'
   end
-  
+
   private
-  
+
   def book_params
     params.require(:book).permit(:title, :opinion)
   end
-  
+
 end

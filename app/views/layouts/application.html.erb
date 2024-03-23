@@ -14,31 +14,48 @@
   <body>
     <header>
       <div>Bookers</div>
+      <i class="fa-solid fa-bars"></i>
       <% if user_signed_in? %>
         <li>
-          <%= link_to "Home", user_path(current_user) %>
+          <%= link_to user_path(current_user) do %>
+            <i class="fa-solid fa-house"></i>Home
+          <% end %>
         </li>
         <li>
-          <%= link_to "Users", '/users' %>
+          <%= link_to '/users' do %>
+            <i class="fa-solid fa-users"></i>Users
+          <% end %>
         </li>
         <li>
-          <%= link_to "Books", '/books' %>
+          <%= link_to '/books' do %>
+            <i class="fa-solid fa-book-open"></i>Books
+          <% end %>
         </li>
         <li>
-          <%= link_to "Log out", destroy_user_session_path, method: :delete %>
+          <%= link_to destroy_user_session_path, method: :delete do %>
+            <i class="fa-solid fa-right-from-bracket"></i>Log out
+          <% end %>
         </li>
       <% else %>
         <li>
-          <%= link_to "Home", root_path %>
+          <%= link_to root_path do %>
+             <i class="fa-solid fa-house"></i>Home
+            <% end %>
         </li>
         <li>
-          <%= link_to "About", '/homes/about' %>
+          <%= link_to '/homes/about' do %>
+            <i class="fa-solid fa-link"></i>About
+          <% end %>
         </li>
         <li>
-          <%= link_to "Sign up", new_user_registration_path %>
+          <%= link_to new_user_registration_path do %>
+            <i class="fa-solid fa-user-plus"></i>Sign up
+          <% end %>
         </li>
         <li>
-          <%= link_to "Log in", new_user_session_path %>
+          <%= link_to new_user_session_path do %>
+            <i class="fa-solid fa-right-to-bracket"></i>Log in
+          <% end %>
         </li>
       <% end %>
     </header>
@@ -49,9 +66,9 @@
         </div>
       <% end %>
       
-      <% if user_signed_in? && action_name != "edit" %>
+      <% if user_signed_in? && action_name != "edit" && action_name != "update" %>
         <div>
-           <%= render partial: 'shared/dashboard', locals: { user: @user, book: @book } %>
+          <%= render partial: 'shared/dashboard', locals: { user: @user, book: @book } %>
         </div>
       <% end %>
       <%= yield %>

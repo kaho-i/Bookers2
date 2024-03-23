@@ -25,7 +25,7 @@ class UsersController < ApplicationController
       redirect_to @user
     else
       flash[:notice] = '%s prohibited this %s from being saved:' % [ @user.errors.count == 1 ? "1 error" : "#{@user.errors.count} errors", 'obj' ]
-      redirect_to edit_user_path(@user)
+      render :edit
     end
   end
 
