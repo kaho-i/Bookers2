@@ -1,0 +1,28 @@
+<h2>Books</h2>
+<% books.each do |book| %>
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Title</th>
+      <th>Opinion</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= link_to book_path(book) do %>
+      <tr>
+        <td>
+          <%= image_tag book.user.get_profile_image(80,80) %><br>
+          <% if books_path %>
+            <%= link_to book.user.name, user_path(book.user) %>
+          <% end %>
+        </td>
+        <td><%= link_to book.title, book_path(book) %></td>
+        <td><%= book.opinion %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+

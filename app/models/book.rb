@@ -5,7 +5,4 @@ class Book < ApplicationRecord
   
   belongs_to :user
   
-  def get_image
-    file.path = Rails.root.join('app/assents/images/no_image.jpg')
-  end
 end

@@ -16,7 +16,7 @@
       <div>Bookers</div>
       <% if user_signed_in? %>
         <li>
-          <%= link_to "Home", user_path(current_user.id) %>
+          <%= link_to "Home", user_path(current_user) %>
         </li>
         <li>
           <%= link_to "Users", '/users' %>
@@ -51,9 +51,8 @@
       
       <% if user_signed_in? && action_name != "edit" %>
         <div>
-          <%= render 'shared/dashboard' %>
+           <%= render partial: 'shared/dashboard', locals: { user: @user, book: @book } %>
         </div>
-      <% else %>
       <% end %>
       <%= yield %>
     </main>

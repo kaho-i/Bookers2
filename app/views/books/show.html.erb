@@ -1,2 +1,21 @@
-<h1>Books#show</h1>
-<p>Find me in app/views/books/show.html.erb</p>
+<h2>Book detail</h2>
+<%= form_with model: @book do |f| %>
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <%= link_to user_path(@user) do %>
+          <%= image_tag @book.user.get_profile_image(80,80)%><br>
+        <% end %>
+        <%= link_to @user.name, user_path(@user) %>
+      </td>
+      <td><%= link_to @book.title, book_path(@book) %></td>
+      <td><%= @book.opinion %></td>
+      <% if @user == current_user %>
+        <td><%= link_to "Edit", edit_book_path(@book) %></td>
+        <td><%= link_to "Destroy", book_path(@book), method: :delete, data: { confirm: "本当に消しますか？" } %></td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
+<% end %>
