@@ -1,5 +1,4 @@
 <h2>Books</h2>
-<% books.each do |book| %>
 <table>
   <thead>
     <tr>
@@ -10,6 +9,7 @@
     </tr>
   </thead>
   <tbody>
+    <% books.each do |book| %>
     <%= link_to book_path(book) do %>
       <tr>
         <td>
@@ -22,7 +22,6 @@
         <td><%= book.opinion %></td>
       </tr>
     <% end %>
+    <% end %>
   </tbody>
 </table>
-<% end %>
-

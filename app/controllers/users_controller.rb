@@ -3,15 +3,6 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def create
-    @user = User.new(user_params)
-    if @user.save
-      flash[:notice] = "%s successfully" % "Welcome! You have signed up"
-    else
-      render 'new'
-    end
-  end
-
   def index
     @users = User.all
     @user = current_user
@@ -30,6 +21,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.assign_attributes(user_params)
     if @user.update(user_params)
+      flash[:notice] = '%s successfully.' % 'You have updated user'
       redirect_to @user
     else
       flash[:notice] = '%s prohibited this %s from being saved:' % [ @user.errors.count == 1 ? "1 error" : "#{@user.errors.count} errors", 'obj' ]

@@ -7,7 +7,7 @@ class BooksController < ApplicationController
       flash[:notice] = '%s successfully.' % 'You have created book'
       redirect_to book_path(@book)
     else
-      flash[:notice] = '%s prohibited this %s from being saved:' % [ @book.errors.count == 1 ? "1 error" : "#{@book.errors.count} errors", 'user' ]
+      flash[:notice] = '%s prohibited this %s from being saved:' % [ @book.errors.count == 1 ? "1 error" : "#{@book.errors.count} errors", 'obj' ]
       @books = Book.all
       render :index
     end
@@ -28,12 +28,14 @@ class BooksController < ApplicationController
   end
   
   def update
-    book = Book.find(params[:id])
-    if book.update(book_params)
+    @book = Book.find(params[:id])
+    @user = @book.user
+    if @book.update(book_params)
       flash[:notice] = '%s successfully.' % 'You have updated book'
-      redirect_to user_path(current_user.id)
+      redirect_to user_path(@user.id)
     else
-      render :edit
+      flash[:notice] = '%s prohibited this %s from being saved:' % [ @book.errors.count == 1 ? "1 error" : "#{@book.errors.count} errors", 'obj' ]
+      render edit
     end
   end
   

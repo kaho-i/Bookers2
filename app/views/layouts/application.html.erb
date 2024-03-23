@@ -43,9 +43,9 @@
       <% end %>
     </header>
     <main>
-      <% if flash[:notice] %>
-        <div class="notice">
-          <%= flash[:notice] %>
+      <% if notice %>
+        <div class="flash-message">
+          <%= notice %>
         </div>
       <% end %>
       
