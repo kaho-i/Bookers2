@@ -13,68 +13,98 @@
 
   <body>
     <header>
-      <div>Bookers</div>
-      <i class="fa-solid fa-bars"></i>
-      <% if user_signed_in? %>
-        <li>
-          <%= link_to user_path(current_user) do %>
-            <i class="fa-solid fa-house"></i>Home
-          <% end %>
-        </li>
-        <li>
-          <%= link_to '/users' do %>
-            <i class="fa-solid fa-users"></i>Users
-          <% end %>
-        </li>
-        <li>
-          <%= link_to '/books' do %>
-            <i class="fa-solid fa-book-open"></i>Books
-          <% end %>
-        </li>
-        <li>
-          <%= link_to destroy_user_session_path, method: :delete do %>
-            <i class="fa-solid fa-right-from-bracket"></i>Log out
-          <% end %>
-        </li>
-      <% else %>
-        <li>
-          <%= link_to root_path do %>
-             <i class="fa-solid fa-house"></i>Home
-            <% end %>
-        </li>
-        <li>
-          <%= link_to '/homes/about' do %>
-            <i class="fa-solid fa-link"></i>About
-          <% end %>
-        </li>
-        <li>
-          <%= link_to new_user_registration_path do %>
-            <i class="fa-solid fa-user-plus"></i>Sign up
-          <% end %>
-        </li>
-        <li>
-          <%= link_to new_user_session_path do %>
-            <i class="fa-solid fa-right-to-bracket"></i>Log in
-          <% end %>
-        </li>
-      <% end %>
+      <nav class='navbar-expand-lg navbar-dark bg-dark'>
+        <div class="container">
+          <span class="navbar-brand"><%= link_to 'Bookers', root_path %></span>
+          <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+             <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto">
+              <% if user_signed_in? %>
+                <li class="nav-link text-light">
+                  <%= link_to user_path(current_user) do %>
+                    <i class="fa-solid fa-house"></i>Home
+                  <% end %>
+                </li>
+                <li class="nav-link text-light">
+                  <%= link_to '/users' do %>
+                    <i class="fa-solid fa-users"></i>Users
+                  <% end %>
+                </li>
+                <li class="nav-link text-light">
+                  <%= link_to '/books' do %>
+                    <i class="fa-solid fa-book-open"></i>Books
+                  <% end %>
+                </li>
+                <li class="nav-link text-light">
+                  <%= link_to destroy_user_session_path, method: :delete, data: { method: :delete, remote: true } do %>
+                    <i class="fa-solid fa-right-from-bracket"></i>Log out
+                  <% end %>
+                </li>
+              <% else %>
+                <li class="nav-link text-light">
+                  <%= link_to root_path do %>
+                     <i class="fa-solid fa-house"></i>Home
+                    <% end %>
+                </li>
+                <li class="nav-link text-light">
+                  <%= link_to '/home/about' do %>
+                    <i class="fa-solid fa-link"></i>About
+                  <% end %>
+                </li>
+                <li class="nav-link text-light">
+                  <%= link_to new_user_registration_path do %>
+                    <i class="fa-solid fa-user-plus"></i>Sign up
+                  <% end %>
+                </li>
+                <li class="nav-link text-light">
+                  <%= link_to new_user_session_path do %>
+                    <i class="fa-solid fa-right-to-bracket"></i>Log in
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </nav>
     </header>
     <main>
       <% if notice %>
         <div class="flash-message">
-          <%= notice %>
+          <p><%= notice %></p>
         </div>
       <% end %>
-      
-      <% if user_signed_in? && action_name != "edit" && action_name != "update" %>
-        <div>
-          <%= render partial: 'shared/dashboard', locals: { user: @user, book: @book } %>
+    
+      <% if user_signed_in? && (action_name == "edit" || action_name == "update") || user_signed_in? && controller_name == "homes" && action_name == "top" %>
+        <div class ="container">
+          <div class = "row">
+            <div class = 'col-md-8 px-5 mx-auto'>
+              <%= yield %>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <div class="container px-5">
+          <div class="row">
+            <div class="col-md-3">
+              <%= render partial: 'shared/dashboard', locals: { user: @user, book: @book } %>
+            </div>
+            <div class='col-md-8 offset-md-1'>
+              <%= yield %>
+            </div>
+          </div>
         </div>
       <% end %>
-      <%= yield %>
     </main>
     <footer>
-      <p>CopyRight Infratop.inc</p>
+      <div class="container mt-5">
+        <div class="row">
+          <div class="mx-auto">
+            <p>CopyRight Infratop.inc</p>
+          </div>
+        </div>
+      </div>
     </footer>
   </body>
 </html>

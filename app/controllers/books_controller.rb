@@ -1,4 +1,5 @@
 class BooksController < ApplicationController
+  include ActionView::Helpers::TextHelper
   def create
     @user = current_user
     @book = Book.new(book_params)
@@ -7,7 +8,8 @@ class BooksController < ApplicationController
       flash[:notice] = '%s successfully.' % 'You have created book'
       redirect_to book_path(@book)
     else
-      flash[:notice] = '%s prohibited this %s from being saved:' % [ @book.errors.count == 1 ? "1 error" : "#{@book.errors.count} errors", 'obj' ]
+      error_count = @book.errors.count
+      flash[:alert] = '%s prohibited this %s from being saved:' % [ pluralize(error_count, "error"), 'obj' ]
       @books = Book.all
       render :index
     end
@@ -34,7 +36,8 @@ class BooksController < ApplicationController
       flash[:notice] = '%s successfully.' % 'You have updated book'
       redirect_to user_path(@user.id)
     else
-      flash[:notice] = '%s prohibited this %s from being saved:' % [ @book.errors.count == 1 ? "1 error" : "#{@book.errors.count} errors", 'obj' ]
+      error_count = @book.errors.count
+      flash[:alert] = '%s prohibited this %s from being saved:' % [ pluralize(error_count, "error"), 'obj' ]
       render :edit
     end
   end

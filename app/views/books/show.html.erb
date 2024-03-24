@@ -1,19 +1,27 @@
 <h2>Book detail</h2>
 <%= form_with model: @book do |f| %>
-<table>
+<table class="table">
   <tbody>
     <tr>
       <td>
         <%= link_to user_path(@user) do %>
           <%= image_tag @book.user.get_profile_image(80,80)%><br>
+          <%= @user.name %>
         <% end %>
-        <%= link_to @user.name, user_path(@user) %>
       </td>
       <td><%= link_to @book.title, book_path(@book) %></td>
-      <td><%= @book.opinion %></td>
+      <td><%= @book.body %></td>
       <% if @user == current_user %>
-        <td><%= link_to "Edit", edit_book_path(@book) %></td>
-        <td><%= link_to "Destroy", book_path(@book), method: :delete, data: { confirm: "本当に消しますか？" } %></td>
+        <td>
+          <div class="btn btn-success">
+            <%= link_to "Edit", edit_book_path(@book) %>
+          </div>
+        </td>
+        <td>
+          <div class="btn btn-danger">
+            <%= link_to "Destroy", book_path(@book), method: :delete, data: { confirm: "本当に消しますか？" } %>
+          </div>
+        </td>
       <% end %>
     </tr>
   </tbody>

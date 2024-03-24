@@ -1,14 +1,17 @@
-<% if Book.new.errors.any? %>
-  <ul>
-  <% Book.new.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-  <% end %>
-  </ul>
+<% if book.errors.any? %>
+  <div id="error_explanation">
+    <h3><%= flash.now[:alert] %></h3>
+    <ul>
+    <% book.errord.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
 <% end %>
 
 <h2>User info</h2>
 <%= image_tag user.get_profile_image(100,100) %>
-<table>
+<table class=table>
   <tbody>
     <tr></tr>
     <tr>
@@ -22,15 +25,38 @@
   </tbody>
 </table>
 
-<%= link_to edit_user_path(current_user) do %>
-  <i class="fa-solid fa-user-gear"></i>
-<% end %>
+<div class="row">
+  <div class="btn btn-outline-secondary">
+    <%= link_to edit_user_path(current_user) do %>
+      <i class="fa-solid fa-user-gear"></i>
+    <% end %>
+  </div>
+</div>
 
-<h2>New book</h2>
-<%= form_with model: Book.new do |f| %>
-  <p>Title</p>
-  <%= f.text_field :title %>
-  <p>Opinion</p>
-  <%= f.text_area :opinion %><br>
-  <%= f.submit "Create Book" %>
+<% if action_name == "show" %>
+  <div class="row">
+    <h2 class="mt-3">New book</h2>
+    <%= form_with model: Book.new do |f| %>
+      <p>Title</p>
+      <%= f.text_field :title %>
+      <p>Opinion</p>
+      <%= f.text_area :body %><br>
+      <div class="btn btn-success">
+        <%= f.submit "Create Book" %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="row">
+    <h2 class="mt-3">New book</h2>
+    <%= form_with model: book do |f| %>
+      <p>Title</p>
+      <%= f.text_field :title %>
+      <p>Opinion</p>
+      <%= f.text_area :body %><br>
+      <div class="btn btn-success">
+        <%= f.submit "Create Book" %>
+      </div>
+    <% end %>
+  </div>
 <% end %>

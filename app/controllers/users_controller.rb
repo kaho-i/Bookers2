@@ -1,16 +1,14 @@
 class UsersController < ApplicationController
   before_action :is_matching_login_user, only: [:edit, :update]
-  def new
-    @user = User.new
-  end
-
+  include ActionView::Helpers::TextHelper
   def index
     @users = User.all
     @user = current_user
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = current_user
+    @book = Book.new
     @books = @user.books
   end
 
@@ -25,7 +23,8 @@ class UsersController < ApplicationController
       flash[:notice] = '%s successfully.' % 'You have updated user'
       redirect_to @user
     else
-      flash[:notice] = '%s prohibited this %s from being saved:' % [ @user.errors.count == 1 ? "1 error" : "#{@user.errors.count} errors", 'obj' ]
+      error_count = @user.errors.count
+      flash[:alert] = '%s prohibited this %s from being saved:' % [ pluralize(error_count, "error"), 'obj' ]
       render :edit
     end
   end
