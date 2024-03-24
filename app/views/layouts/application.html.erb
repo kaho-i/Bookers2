@@ -38,7 +38,7 @@
                   <% end %>
                 </li>
                 <li class="nav-link text-light">
-                  <%= link_to destroy_user_session_path, method: :delete, data: { method: :delete, remote: true } do %>
+                    <%= link_to destroy_user_session_path, method: :delete do %>
                     <i class="fa-solid fa-right-from-bracket"></i>Log out
                   <% end %>
                 </li>
@@ -75,26 +75,44 @@
           <p><%= notice %></p>
         </div>
       <% end %>
-    
-      <% if user_signed_in? && (action_name == "edit" || action_name == "update") || user_signed_in? && controller_name == "homes" && action_name == "top" %>
-        <div class ="container">
-          <div class = "row">
-            <div class = 'col-md-8 px-5 mx-auto'>
-              <%= yield %>
+      
+      <% if user_signed_in? %>
+        <% if (action_name == "edit" || action_name == "update") || user_signed_in? && controller_name == "homes" && action_name == "top" %>
+          <div class ="container">
+          <!--div1-->
+            <div class = "row">
+            <!-- div2-->
+              <div class = 'col-md-8 px-5 mx-auto'>
+              <!--div3-->
+                <%= yield %>
+              </div>
+              <!--div3-->
             </div>
+            <!--div2-->
           </div>
-        </div>
+          <!--div1-->
+        <% else %>
+          <div class="container px-5">
+          <!--div1-->
+            <div class="row">
+            <!--div2-->
+              <div class="col-md-3">
+              <!--div3-->
+                <%= render partial: 'shared/dashboard', locals: { user: @user, book: @book } %>
+              </div>
+              <!--div3-->
+              <div class='col-md-8 offset-md-1'>
+              <!--div4-->
+                <%= yield %>
+              </div>
+              <!--div4-->
+            </div>
+            <!--div2-->
+          </div>
+          <!--div1-->
+        <% end %>
       <% else %>
-        <div class="container px-5">
-          <div class="row">
-            <div class="col-md-3">
-              <%= render partial: 'shared/dashboard', locals: { user: @user, book: @book } %>
-            </div>
-            <div class='col-md-8 offset-md-1'>
-              <%= yield %>
-            </div>
-          </div>
-        </div>
+        <%= yield %>
       <% end %>
     </main>
     <footer>

@@ -3,7 +3,7 @@
   <div id="error_explanation">
     <h3><%= flash.now[:alert] %></h3>
     <ul>
-    <% @book.errord.full_messages.each do |message| %>
+    <% @book.errors.full_messages.each do |message| %>
       <li><%= message %></li>
     <% end %>
     </ul>
