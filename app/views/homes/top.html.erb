@@ -1,9 +1,6 @@
 <div class="container">
-<!--div1-->
   <div class="row">
-  <!--div2-->
     <div class="mx-auto col-11">
-    <!--div3-->
       <h1>Welcome to <strong><i class="fa-solid fa-book"></i>Bookers</strong>!!</h1>
       
       <p>In <strong><i class="fa-solid fa-book"></i>Bookers</strong>,</p>
@@ -11,24 +8,13 @@
       <p>about various books!</p>
       
       <div class="btn-wrapper col-10-auto">
-      <!--div4-->
         <div class="row">
-          <!--div5-->
-          <div class="btn btn-info mb-3"><%= link_to "Log in", new_user_session_path %></div>
-          <!--div6-->
+          <%= link_to "Log in", new_user_session_path, class: "btn btn-info btn-block mb-3" %>
         </div>
-        <!--div5-->
         <div class="row">
-        <!--div7-->
-          <div class="btn btn-success"><%= link_to "Sign up", new_user_registration_path %></div>
-          <!--div8-->
+          <%= link_to "Sign up", new_user_registration_path, class: "btn btn-success btn-block" %>
         </div>
-        <!--div7-->
       </div>
-      <!--div4-->
     </div>
-    <!--div3-->
   </div>
-  <!--div2-->
 </div>
-<!--div1-->

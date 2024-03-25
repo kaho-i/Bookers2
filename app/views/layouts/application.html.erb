@@ -13,53 +13,53 @@
 
   <body>
     <header>
-      <nav class='navbar-expand-lg navbar-dark bg-dark'>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-          <span class="navbar-brand"><%= link_to 'Bookers', root_path %></span>
+          <%= link_to 'Bookers', root_path, class: "navbar-brand" %>
           <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
              <i class="fa-solid fa-bars"></i>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ml-auto">
               <% if user_signed_in? %>
-                <li class="nav-link text-light">
-                  <%= link_to user_path(current_user) do %>
+                <li>
+                  <%= link_to user_path(current_user), class: "nav-link text-light" do %>
                     <i class="fa-solid fa-house"></i>Home
                   <% end %>
                 </li>
-                <li class="nav-link text-light">
-                  <%= link_to '/users' do %>
+                <li>
+                  <%= link_to '/users', class: "nav-link text-light" do %>
                     <i class="fa-solid fa-users"></i>Users
                   <% end %>
                 </li>
-                <li class="nav-link text-light">
-                  <%= link_to '/books' do %>
+                <li>
+                  <%= link_to '/books', class: "nav-link text-light" do %>
                     <i class="fa-solid fa-book-open"></i>Books
                   <% end %>
                 </li>
-                <li class="nav-link text-light">
-                    <%= link_to destroy_user_session_path, method: :delete do %>
+                <li>
+                    <%= link_to destroy_user_session_path, method: :delete, class: "nav-link text-light" do %>
                     <i class="fa-solid fa-right-from-bracket"></i>Log out
                   <% end %>
                 </li>
               <% else %>
-                <li class="nav-link text-light">
-                  <%= link_to root_path do %>
+                <li>
+                  <%= link_to root_path, class: "nav-link text-light" do %>
                      <i class="fa-solid fa-house"></i>Home
                     <% end %>
                 </li>
-                <li class="nav-link text-light">
-                  <%= link_to '/home/about' do %>
+                <li>
+                  <%= link_to '/home/about', class: "nav-link text-light" do %>
                     <i class="fa-solid fa-link"></i>About
                   <% end %>
                 </li>
-                <li class="nav-link text-light">
-                  <%= link_to new_user_registration_path do %>
+                <li>
+                  <%= link_to new_user_registration_path, class: "nav-link text-light" do %>
                     <i class="fa-solid fa-user-plus"></i>Sign up
                   <% end %>
                 </li>
-                <li class="nav-link text-light">
-                  <%= link_to new_user_session_path do %>
+                <li>
+                  <%= link_to new_user_session_path, class: "nav-link text-light" do %>
                     <i class="fa-solid fa-right-to-bracket"></i>Log in
                   <% end %>
                 </li>
@@ -70,47 +70,38 @@
       </nav>
     </header>
     <main>
-      <% if notice %>
-        <div class="flash-message">
+      <div class="flash-message">
+        <% if notice %>
           <p><%= notice %></p>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
       
       <% if user_signed_in? %>
         <% if (action_name == "edit" || action_name == "update") || user_signed_in? && controller_name == "homes" && action_name == "top" %>
-          <div class ="container">
-          <!--div1-->
-            <div class = "row">
-            <!-- div2-->
-              <div class = 'col-md-8 px-5 mx-auto'>
-              <!--div3-->
-                <%= yield %>
-              </div>
-              <!--div3-->
-            </div>
-            <!--div2-->
-          </div>
-          <!--div1-->
+        <!--edit,update,homes/topで表示する画面-->
+          <%= yield %>
         <% else %>
           <div class="container px-5">
-          <!--div1-->
+            <% if @book.errors.any? %>
+              <div id="error_explanation">
+                <h3><%= flash.now[:alert] %></h3>
+                <ul>
+                  <% @book.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
             <div class="row">
-            <!--div2-->
               <div class="col-md-3">
-              <!--div3-->
                 <%= render partial: 'shared/dashboard', locals: { user: @user, book: @book } %>
               </div>
-              <!--div3-->
               <div class='col-md-8 offset-md-1'>
-              <!--div4-->
                 <%= yield %>
               </div>
-              <!--div4-->
             </div>
-            <!--div2-->
           </div>
-          <!--div1-->
-        <% end %>
+         <% end %>
       <% else %>
         <%= yield %>
       <% end %>

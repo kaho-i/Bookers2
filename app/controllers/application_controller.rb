@@ -6,11 +6,11 @@ class ApplicationController < ActionController::Base
   end
   
   def after_sign_out_path_for(resource)
-    about_path
+    root_path
   end
   
   def dashboard
-    @user = current_user
+    @user = User.find(params[:id])
     @book = Book.new
   end
   

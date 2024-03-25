@@ -13,14 +13,10 @@
       <td><%= @book.body %></td>
       <% if @user == current_user %>
         <td>
-          <div class="btn btn-success">
-            <%= link_to "Edit", edit_book_path(@book) %>
-          </div>
+          <%= link_to "Edit", edit_book_path(@book), class: "btn btn-success btn-block" %>
         </td>
         <td>
-          <div class="btn btn-danger">
-            <%= link_to "Destroy", book_path(@book), method: :delete, data: { confirm: "本当に消しますか？" } %>
-          </div>
+          <%= link_to "Destroy", book_path(@book), method: :delete, data: { confirm: "本当に消しますか？" }, class: "btn btn-danger btn-block" %>
         </td>
       <% end %>
     </tr>

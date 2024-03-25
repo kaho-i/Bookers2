@@ -1,4 +1,6 @@
 class BooksController < ApplicationController
+  before_action :authenticate_user!
+  before_action :is_matching_login_user, only: [:edit, :update]
   include ActionView::Helpers::TextHelper
   def create
     @user = current_user
@@ -35,7 +37,7 @@ class BooksController < ApplicationController
     @user = @book.user
     if @book.update(book_params)
       flash[:notice] = '%s successfully.' % 'You have updated book'
-      redirect_to user_path(@user.id)
+      redirect_to book_path(@book.id)
     else
       error_count = @book.errors.count
       flash[:alert] = '%s prohibited this %s from being saved:' % [ pluralize(error_count, "error"), 'obj' ]
@@ -53,6 +55,13 @@ class BooksController < ApplicationController
 
   def book_params
     params.require(:book).permit(:title, :body)
+  end
+  
+  def is_matching_login_user
+    user = User.find(params[:id])
+    unless user.id == current_user.id
+      redirect_to '/books'
+    end
   end
 
 end
