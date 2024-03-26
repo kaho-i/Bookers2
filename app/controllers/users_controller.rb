@@ -38,8 +38,10 @@ class UsersController < ApplicationController
   end
   
   def is_matching_login_user
-    user = User.find(params[:id])
-    unless user.id == current_user.id
+    user = User.find_by(id: params[:id])
+    if user.nil?
+      render file: "#{Rails.root}/public/404.html", layout: false, status: :not_found
+    elsif user.id != current_user.id
       redirect_to user_path(current_user)
     end
   end

@@ -10,7 +10,12 @@ class ApplicationController < ActionController::Base
   end
   
   def dashboard
-    @user = User.find(params[:id])
+    @user = User.find_by(id: params[:id])
+    if user.nil?
+      render file: "#{Rails.root}/public/404.html", layout: false, status: :not_found
+    elsif user.id != current_user.id
+      redirect_to user_path(current_user)
+    end
     @book = Book.new
   end
   

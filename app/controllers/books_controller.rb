@@ -58,8 +58,10 @@ class BooksController < ApplicationController
   end
   
   def is_matching_login_user
-    user = User.find(params[:id])
-    unless user.id == current_user.id
+    book = Book.find_by(id: params[:id])
+    if book.nil?
+      render file: "#{Rails.root}/public/404.html", layout: false, status: :not_found
+    elsif book.user_id != current_user.id
       redirect_to '/books'
     end
   end
